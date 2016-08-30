@@ -18,6 +18,7 @@ def index():
 def get_postcodes():
     street = request.args.get('term')
     if street is not None:
+        street = street.lower()
         if len(street) < 3:
             return json.dumps([])
         retrieved = pt.retrieve_by_prefix(trie, street)
@@ -29,5 +30,5 @@ def get_postcodes():
         return json.dumps(['No location provided'])
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0', port=80)
 
