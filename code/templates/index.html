@@ -11,13 +11,33 @@
 	<h2>Nigerian Postcodes Demo</h2>
 
 	<div class="ui-widget">
+	    <label for="postcode">Postcode: </label>
+	    <input id="postcode" type="text" placeholder="Postcode">
+	    <br style="margin-bottom: 10px;">
+	    <label for="state">State: </label>
+	    <input id="state" type="text" placeholder="State">
+	    <br style="margin-bottom: 10px;">
+	    <label for="city">City: </label>
+	    <input id="city" type="text" placeholder="City">
+	    <br style="margin-bottom: 10px;">
 	    <label for="tags">Street/Area: </label>
-	    <input id="tags">
+	    <input id="tags" placeholder="Type here">
 	</div>
 	<script type="text/javascript">
 	 $(function() {
 	     $('#tags').autocomplete({
-		 source: '/postcodes'
+		 source: '/postcodes',
+		 focus: function(e, ui) {
+		     var address = ui.item.value;
+		     var postcodeArr = address.split('-');
+		     var postcode = postcodeArr[1].trim();
+		     var stateArr = postcodeArr[0].split(',');
+		     var state = stateArr[stateArr.length - 1].trim();
+		     var city = stateArr[stateArr.length - 2].trim();
+		     $('#postcode').val(postcode);
+		     $('#state').val(state);
+		     $('#city').val(city);
+		 }
 	     });
 	 });
 	</script>
